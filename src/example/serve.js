@@ -36,6 +36,9 @@ router.get('/simple/get', (req, res) => {
     msg: '成功'
   })
 })
+router.get('/base/get', (req, res) => {
+  res.json(req.query)
+})
 
 // 路由监听
 app.use(router)

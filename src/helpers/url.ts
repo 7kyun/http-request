@@ -1,14 +1,14 @@
-import { isDate, isObject } from "./util"
+import { isDate, isPlainObject } from "./util"
 
 // 数据加密  并保留部分特殊字符
-export function encode(val: string): string {
+function encode(val: string): string {
   return encodeURIComponent(val)
         .replace(/%40/g, '@')
         .replace(/%3a/gi, ':')
         .replace(/%24/g, '$')
         .replace(/%2c/gi, ',')
         .replace(/%20/g, '+')
-        .replace(/%2b/gi, '[')
+        .replace(/%5b/gi, '[')
         .replace(/%5d/gi, ']')
 }
 
@@ -38,7 +38,7 @@ export function buildUrl(url: string, params?: any) {
       // 将对象转为字符串 
       if (isDate(v)) {
         v = v.toISOString()
-      } else if (isObject(v)) {
+      } else if (isPlainObject(v)) {
         v = JSON.stringify(v)
       }
       parts.push(`${encode(key)}=${encode(v)}`)
