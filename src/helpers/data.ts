@@ -1,4 +1,3 @@
-import { config } from "shelljs";
 import { isPlainObject } from "./util";
 
 export function stringifyData(data: any): any {

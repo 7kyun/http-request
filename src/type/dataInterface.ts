@@ -10,7 +10,7 @@ type Method = 'get'     | 'GET'     |
 export interface HttpRequestConfig {
   url: string
   method?: Method
-  header?: any
+  headers?: any
   data?: any
   params?: any
 }
