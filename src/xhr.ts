@@ -1,3 +1,4 @@
+import { createError } from './helpers/error'
 import { parseHeaders } from './helpers/headers'
 import { HttpPromise, HttpRequestConfig, HttpResponse } from './type/dataInterface'
 
@@ -32,7 +33,7 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
     request.onreadystatechange = () => {
       // 状态码 判断
 
-      //  请求结束
+      //  非 请求结束
       if (request.readyState !== 4) return
       // 网络错误 或 超时
       if (request.status === 0) return
@@ -61,16 +62,16 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
       if (response.status < 300 && response.status >= 200) {
         resolve(response)
       } else {
-        reject(new Error(`Request failed with status code ${response.status}`))
+        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
       }
     }
 
     request.ontimeout = () => {
-      reject(new Error(`Timeout of ${request.timeout} ms exceeded`))
+      reject(createError(`Timeout of ${request.timeout} ms exceeded`, config, 'ECONNABORTED', request))
     }
 
     request.onerror = () => {
-      reject(new Error('Network Error'))
+      reject(createError('Network Error', config, null, request))
     }
   })
 }
