@@ -47,7 +47,7 @@ interface ResponseData<T = any> {
 interface User {
   name: string
   age: number
-}
+} 
 
 // http<ResponseData<User>>('/extend/user')
 //   .then(res => {
