@@ -1,11 +1,12 @@
-import { createError } from './helpers/error'
-import { parseHeaders } from './helpers/headers'
-import { HttpPromise, HttpRequestConfig, HttpResponse } from './type/dataInterface'
+import { createError } from '../helpers/error'
+import { parseHeaders } from '../helpers/headers'
+import { HttpPromise, HttpRequestConfig, HttpResponse } from '../type/dataInterface'
 
 export function xhr(config: HttpRequestConfig): HttpPromise {
   return new Promise((resolve, reject) => {
-    let { url, method = 'GET', headers, data = null, responseType, timeout } = config
     const request = new XMLHttpRequest()
+
+    let { url, method = 'GET', headers, data = null, responseType, timeout } = config
 
     if (responseType) {
       request.responseType = responseType
