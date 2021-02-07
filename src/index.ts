@@ -1,3 +1,4 @@
+import { stringifyData } from './helpers/data'
 import { buildUrl } from './helpers/url'
 import { HttpRequestConfig } from './type/dataInterface'
 import { xhr } from './xhr'
@@ -7,10 +8,15 @@ function formatUrl(config: HttpRequestConfig) {
   const { url, params } = config
   return buildUrl(url, params)
 }
+// 格式化 data
+function formatData(config: HttpRequestConfig) {
+  return stringifyData(config.data)
+}
 
 // 加工处理 config
 function processConfig(config: HttpRequestConfig) {
   config.url = formatUrl(config)
+  config.data = formatData(config)
 }
 
 export function http(config: HttpRequestConfig) {
