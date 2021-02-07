@@ -1,4 +1,5 @@
 import { stringifyData } from './helpers/data'
+import { processHeaders } from './helpers/header';
 import { buildUrl } from './helpers/url'
 import { HttpRequestConfig } from './type/dataInterface'
 import { xhr } from './xhr'
@@ -8,6 +9,11 @@ function formatUrl(config: HttpRequestConfig) {
   const { url, params } = config
   return buildUrl(url, params)
 }
+// 格式化 header
+function formatHeader(config: HttpRequestConfig) {
+  const { header = {}, data } = config
+  return processHeaders(header, data)
+}
 // 格式化 data
 function formatData(config: HttpRequestConfig) {
   return stringifyData(config.data)
@@ -16,6 +22,7 @@ function formatData(config: HttpRequestConfig) {
 // 加工处理 config
 function processConfig(config: HttpRequestConfig) {
   config.url = formatUrl(config)
+  config.header = formatHeader(config)
   config.data = formatData(config)
 }
 
