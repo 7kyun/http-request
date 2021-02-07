@@ -8,7 +8,7 @@ export type Method = 'get'     | 'GET'     |
               'patch'   | 'PATCH'
 
 export interface HttpRequestConfig {
-  url: string
+  url?: string
   method?: Method
   headers?: any
   data?: any
@@ -53,4 +53,5 @@ export interface Http {
 // Http实例化的接口  这样http实例既是一个函数， 也拥有n个方法
 export interface HttpInstance extends Http {
   (config: HttpRequestConfig): HttpPromise
+  (url: string, config?: HttpRequestConfig): HttpPromise // 运用函数重载 增加第二种函数定义
 }

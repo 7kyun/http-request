@@ -7,7 +7,7 @@ import { xhr } from './xhr'
 // 格式化 url
 function formatUrl(config: HttpRequestConfig) {
   const { url, params } = config
-  return buildUrl(url, params)
+  return buildUrl(url!, params)
 }
 // 格式化 header
 function formatHeader(config: HttpRequestConfig) {

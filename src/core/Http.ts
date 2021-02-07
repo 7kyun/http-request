@@ -1,3 +1,4 @@
+import { config } from 'shelljs';
 import { HttpPromise, HttpRequestConfig, Method } from "../type/dataInterface"
 import dispatchRequest from "./dispatchRequest"
 
@@ -18,7 +19,18 @@ export default class Http {
   }
 
   // 默认请求
-  request(config: HttpRequestConfig): HttpPromise {
+  request(url: string | HttpRequestConfig, config?: HttpRequestConfig): HttpPromise {
+    if (typeof url === 'string') {
+      // url 为路由的情况
+      if (!config) {
+        // 无config
+        config = {}
+      }
+      config.url = url
+    } else {
+      // url 为 config
+      config = url
+    }
     return dispatchRequest(config)
   }
   // 指定请求

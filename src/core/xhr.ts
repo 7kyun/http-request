@@ -16,7 +16,7 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
     }
 
     // method 统一处理为大写
-    request.open(method.toUpperCase(), url, true)
+    request.open(method.toUpperCase(), url!, true)
 
     // 设置 headers
     Object.keys(headers).map(name => {
