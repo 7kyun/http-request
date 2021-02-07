@@ -61,7 +61,7 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
       if (response.status < 300 && response.status >= 200) {
         resolve(response)
       } else {
-        reject(response)
+        reject(new Error(`Request failed with status code ${response.status}`))
       }
     }
 
