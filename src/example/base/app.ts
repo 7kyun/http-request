@@ -22,16 +22,16 @@ import { http } from '../../index'
 //   }
 // })
 
-http({
-  method: 'post',
-  url: '/base/post',
-  headers: {
-    'content-type': 'application/json;charset=utf-8'
-  },
-  data: {
-    msg: '测试headers'
-  }
-})
+// http({
+//   method: 'post',
+//   url: '/base/post',
+//   headers: {
+//     'content-type': 'application/json;charset=utf-8'
+//   },
+//   data: {
+//     msg: '测试headers'
+//   }
+// })
 
 // const paramsString = 'q=URLUtils.searchParams&topic=api'
 // const searchParams = new URLSearchParams(paramsString)
@@ -49,3 +49,23 @@ http({
 //   url: '/base/buffer',
 //   data: arr
 // })
+
+
+http({
+  method: 'post',
+  url: '/base/post',
+  data: { a: 1, b: 2 }
+})
+  .then(res => {
+    console.log(res)
+  })
+
+http({
+  method: 'post',
+  url: '/base/post',
+  responseType: 'json',
+  data: { bar: 'foo', foo: 'bar' }
+})
+  .then(res => {
+    console.log(res)
+  })

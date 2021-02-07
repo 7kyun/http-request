@@ -1,7 +1,7 @@
 import { stringifyData } from './helpers/data'
 import { processHeaders } from './helpers/headers';
 import { buildUrl } from './helpers/url'
-import { HttpRequestConfig } from './type/dataInterface'
+import { HttpPromise, HttpRequestConfig } from './type/dataInterface'
 import { xhr } from './xhr'
 
 // 格式化 url
@@ -26,7 +26,7 @@ function processConfig(config: HttpRequestConfig) {
   config.data = formatData(config)
 }
 
-export function http(config: HttpRequestConfig) {
+export function http(config: HttpRequestConfig): HttpPromise {
   processConfig(config)
-  xhr(config) // 发起数据请求
+  return xhr(config) // 发起数据请求
 }

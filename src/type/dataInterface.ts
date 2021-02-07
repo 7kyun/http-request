@@ -13,4 +13,18 @@ export interface HttpRequestConfig {
   headers?: any
   data?: any
   params?: any
+  responseType?: XMLHttpRequestResponseType
+}
+
+export interface HttpResponse {
+  data: any
+  status: number
+  statusText: string
+  headers: any
+  config: HttpRequestConfig
+  request: any
+}
+
+export interface HttpPromise extends Promise<HttpResponse> {
+
 }
