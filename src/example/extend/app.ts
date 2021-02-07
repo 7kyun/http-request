@@ -24,18 +24,50 @@ import http from '../../index'
 // http.put('/extend/put', { msg: 'put' })
 // http.patch('/extend/patch', { msg: 'patch' })
 
-// http.get('/extend/user')
+// http({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'config'
+//   }
+// })
+// http('/extend/post', {
+//   method: 'post',
+//   data: {
+//     msg: 'url + config'
+//   }
+// })
 
-http({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'config'
+interface ResponseData<T = any> {
+  code: number
+  data: T
+  msg: string
+}
+
+interface User {
+  name: string
+  age: number
+}
+
+// http<ResponseData<User>>('/extend/user')
+//   .then(res => {
+//     console.log(res.data)
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
+
+function getUser<T>() {
+  return http<ResponseData<T>>('/extend/user')
+    .then(res => res.data)
+    .catch(err => console.error(err))
+}
+
+async function getUserData() {
+  const user = await getUser<User>()
+  if (user) {
+    console.log(user.data.age)
   }
-})
-http('/extend/post', {
-  method: 'post',
-  data: {
-    msg: 'url + config'
-  }
-})
+}
+
+getUserData()

@@ -17,8 +17,9 @@ export interface HttpRequestConfig {
   timeout?: number
 }
 
-export interface HttpResponse {
-  data: any
+// 返回data的定义： 泛型 默认为 any
+export interface HttpResponse<T = any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -26,7 +27,8 @@ export interface HttpResponse {
   request: any
 }
 
-export interface HttpPromise extends Promise<HttpResponse> {
+// 
+export interface HttpPromise<T = any> extends Promise<HttpResponse<T>> {
 
 }
 
@@ -39,19 +41,20 @@ export interface HttpError {
   isHttpError: boolean
 }
 
+// 定义方法时 保证实际传入的泛型 与 返回的promise的泛型一致
 export interface Http {
-  request(config: HttpRequestConfig): HttpPromise
-  get(url: string, config?: HttpRequestConfig): HttpPromise
-  post(url: string, data?: any, config?: HttpRequestConfig): HttpPromise
-  put(url: string, data?: any, config?: HttpRequestConfig): HttpPromise
-  delete(url: string, config?: HttpRequestConfig): HttpPromise
-  head(url: string, config?: HttpRequestConfig): HttpPromise
-  options(url: string, config?: HttpRequestConfig): HttpPromise
-  patch(url: string, data?: any, config?: HttpRequestConfig): HttpPromise
+  request<T = any>(config: HttpRequestConfig): HttpPromise<T>
+  get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>
+  post<T = any>(url: string, data?: any, config?: HttpRequestConfig): HttpPromise<T>
+  put<T = any>(url: string, data?: any, config?: HttpRequestConfig): HttpPromise<T>
+  delete<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>
+  head<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>
+  options<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>
+  patch<T = any>(url: string, data?: any, config?: HttpRequestConfig): HttpPromise<T>
 }
 
 // Http实例化的接口  这样http实例既是一个函数， 也拥有n个方法
 export interface HttpInstance extends Http {
-  (config: HttpRequestConfig): HttpPromise
-  (url: string, config?: HttpRequestConfig): HttpPromise // 运用函数重载 增加第二种函数定义
+  <T = any>(config: HttpRequestConfig): HttpPromise<T>
+  <T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T> // 运用函数重载 增加第二种函数定义
 }

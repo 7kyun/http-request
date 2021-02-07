@@ -1,4 +1,3 @@
-import { config } from 'shelljs';
 import { HttpPromise, HttpRequestConfig, Method } from "../type/dataInterface"
 import dispatchRequest from "./dispatchRequest"
 
