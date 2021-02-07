@@ -14,6 +14,7 @@ export interface HttpRequestConfig {
   data?: any
   params?: any
   responseType?: XMLHttpRequestResponseType
+  timeout?: number
 }
 
 export interface HttpResponse {

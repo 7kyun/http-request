@@ -57,6 +57,19 @@ router.post('/base/buffer', (req, res) => {
     res.json(buf.toJSON())
   })
 })
+router.get('/error/get', (req, res) => {
+  if (Math.random() > 0.5) {
+    res.json({ msg: '成功' })
+  } else {
+    res.status(500)
+    res.end()
+  }
+})
+router.get('/error/timeout', (req, res) => {
+  setTimeout(() => {
+    res.json({ msg: '成功' })
+  }, 3000)
+})
 
 // 路由监听
 app.use(router)

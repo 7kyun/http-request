@@ -1,5 +1,3 @@
-import { config } from 'shelljs';
-import { config } from 'shelljs';
 import { parseData, stringifyData } from './helpers/data'
 import { processHeaders } from './helpers/headers';
 import { buildUrl } from './helpers/url'

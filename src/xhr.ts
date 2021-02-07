@@ -3,11 +3,16 @@ import { HttpPromise, HttpRequestConfig, HttpResponse } from './type/dataInterfa
 
 export function xhr(config: HttpRequestConfig): HttpPromise {
   return new Promise((resolve, reject) => {
-    let { url, method = 'GET', headers, data = null, responseType } = config
+    let { url, method = 'GET', headers, data = null, responseType, timeout } = config
     const request = new XMLHttpRequest()
+
     if (responseType) {
       request.responseType = responseType
     }
+    if (timeout) {
+      request.timeout = timeout
+    }
+
     // method 统一处理为大写
     request.open(method.toUpperCase(), url, true)
 
@@ -29,6 +34,8 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
 
       //  请求结束
       if (request.readyState !== 4) return
+      // 网络错误 或 超时
+      if (request.status === 0) return
       
       // 解析响应头
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
@@ -47,7 +54,23 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
         request
       }
       
-      resolve(response)
+      handleResponse(response)
+    }
+
+    function handleResponse(response: HttpResponse) {
+      if (response.status < 300 && response.status >= 200) {
+        resolve(response)
+      } else {
+        reject(response)
+      }
+    }
+
+    request.ontimeout = () => {
+      reject(new Error(`Timeout of ${request.timeout} ms exceeded`))
+    }
+
+    request.onerror = () => {
+      reject(new Error('Network Error'))
     }
   })
 }
