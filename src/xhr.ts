@@ -1,3 +1,4 @@
+import { parseHeaders } from './helpers/headers'
 import { HttpPromise, HttpRequestConfig, HttpResponse } from './type/dataInterface'
 
 export function xhr(config: HttpRequestConfig): HttpPromise {
@@ -29,8 +30,8 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
       //  请求结束
       if (request.readyState !== 4) return
       
-      // 响应头
-      const responseHeaders = request.getAllResponseHeaders()
+      // 解析响应头
+      const responseHeaders = parseHeaders(request.getAllResponseHeaders())
 
       // 检查是否自行设置了responseType的值 并根据值来进行返回值来设置返回的值得类型
       // request.response 返回一个 ArrayBuffer、Blob、Document 或 DOMString 具体是哪种类型取决于 XMLHttpRequest.responseType 的值

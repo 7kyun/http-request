@@ -22,3 +22,20 @@ export function processHeaders(headers: any, data: any): any {
 
   return headers
 }
+
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if (!headers) return parsed
+
+  // 通过 \r\n 切割 headers字符串
+  // \r 回到首行 \n 换行
+  headers.split('\r\n').map(line => {
+    let [key, val] = line.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) return
+    if (val) val = val.trim()
+    parsed[key] = val
+  })
+
+  return parsed
+}

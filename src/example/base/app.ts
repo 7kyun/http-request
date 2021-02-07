@@ -50,7 +50,6 @@ import { http } from '../../index'
 //   data: arr
 // })
 
-
 http({
   method: 'post',
   url: '/base/post',
@@ -58,6 +57,9 @@ http({
 })
   .then(res => {
     console.log(res)
+  })
+  .catch(err => {
+    console.log(err)
   })
 
 http({
@@ -68,4 +70,7 @@ http({
 })
   .then(res => {
     console.log(res)
+  })
+  .catch(err => {
+    console.log(err)
   })
