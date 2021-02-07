@@ -20,6 +20,7 @@ app.use(webpackHotMiddleware(compiler))
 app.use(express.static(__dirname))
 
 const bodyParser = require("body-parser")
+const { log } = require('console')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -38,6 +39,23 @@ router.get('/simple/get', (req, res) => {
 })
 router.get('/base/get', (req, res) => {
   res.json(req.query)
+})
+router.post('/base/post', (req, res) => {
+  res.json(req.body)
+})
+router.post('/base/buffer', (req, res) => {
+  let msg = []
+  // 监听数据传输
+  req.on('data', chunk => {
+    if (chunk) {
+      msg.push(chunk)
+    }
+  })
+  // 监听数据传输结束
+  req.on('end', () => {
+    let buf = Buffer.concat(msg)
+    res.json(buf.toJSON())
+  })
 })
 
 // 路由监听

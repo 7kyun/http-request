@@ -7,5 +7,5 @@ export function isDate(val: any): val is Date {
 
 // 是否为标准对象
 export function isPlainObject(val: any): val is object {
-  return toString.call(val) === '[object object]'
+  return toString.call(val) === '[object Object]'
 }
