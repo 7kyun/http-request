@@ -17,6 +17,9 @@ export interface HttpRequestConfig {
   params?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+
+  // 添加一个字符串索引的属性 值为 any类型 
+  [propName: string]: any
 }
 
 // 返回data的定义： 泛型 默认为 any
