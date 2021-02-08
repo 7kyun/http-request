@@ -5,7 +5,7 @@ import { HttpRequestConfig } from './../type/dataInterface'
  * @val1  已有配置值
  * @val2  新的配置值
  */
-function defaultStrat(val1: any, val2: any): any {
+function defaultStrategy(val1: any, val2: any): any {
   return typeof val2 === 'undefined' ? val1 : val2
 }
 
@@ -34,17 +34,23 @@ export default function mergeConfig(
 
   const config = Object.create(null)
 
+  // 先把config2的配置全部写入
   for (let key in config2) {
-
+    mergeField(key)
   }
 
+  // 再将config2中没有的config1的配置写入
   for (let key in config1) {
-
+    if (!config2[key]) {
+      mergeField(key)
+    }
   }
 
   function mergeField(key: string): void {
     // 如有特别定义改配置的合并方法则使用  否则 使用默认
-    const strategy = strategies[key] || defaultStrat
+    const strategy = strategies[key] || defaultStrategy
     config[key] = strategy(config1[key], config2![key])
   }
+
+  return config
 }
