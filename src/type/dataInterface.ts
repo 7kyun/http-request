@@ -1,3 +1,5 @@
+import InterceptorManager from "../core/InterceptorManager";
+
 // 定义 method 请求方法
 export type Method = 'get'     | 'GET'     |
               'post'    | 'POST'    |
@@ -43,6 +45,10 @@ export interface HttpError {
 
 // 定义方法时 保证实际传入的泛型 与 返回的promise的泛型一致
 export interface Http {
+  interceptors: {
+    request: InterceptorManager<HttpRequestConfig>
+    response: InterceptorManager<HttpResponse>
+  }
   request<T = any>(config: HttpRequestConfig): HttpPromise<T>
   get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>
   post<T = any>(url: string, data?: any, config?: HttpRequestConfig): HttpPromise<T>
@@ -57,4 +63,21 @@ export interface Http {
 export interface HttpInstance extends Http {
   <T = any>(config: HttpRequestConfig): HttpPromise<T>
   <T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T> // 运用函数重载 增加第二种函数定义
+}
+
+// 拦截器
+export interface HttpInterceptorManger<T> {
+  // 对 Http 的 req,res 在 promise.then.catch 前进行拦截  输出对应拦截器的id
+  use(resolve: ResolvedFn<T>, reject?: RejectedFn): number
+  // 通过对应拦截器的id 移除该拦截器
+  eject(id: number): void
+}
+// then 的处理函数定义
+export interface ResolvedFn<T = any> {
+  // 返回一个联合类型 T 或 resolve(T)的 promise
+  (val: T): T | Promise<T>
+}
+// catch 的处理函数定义
+export interface RejectedFn {
+  (err: any): any
 }
