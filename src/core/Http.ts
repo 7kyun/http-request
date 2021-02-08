@@ -15,9 +15,12 @@ interface PromiseChain<T> {
 
 
 export default class Http {
+  defaults: HttpRequestConfig
   interceptors: Interceptors
 
-  constructor() {
+  // 实例化的时候 传入默认配置
+  constructor(defaultConfig: HttpRequestConfig) {
+    this.defaults = defaultConfig
     this.interceptors = {
       request: new InterceptorManager<HttpRequestConfig>(),
       response: new InterceptorManager<HttpResponse>()
