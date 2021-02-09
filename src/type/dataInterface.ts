@@ -89,3 +89,7 @@ export interface ResolvedFn<T = any> {
 export interface RejectedFn {
   (err: any): any
 }
+
+export interface HttpStatic extends HttpInstance {
+  create(config?: HttpRequestConfig): HttpInstance
+}

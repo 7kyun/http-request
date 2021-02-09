@@ -19,7 +19,36 @@ import { HttpTransformer } from '../../type/dataInterface'
 //     console.log(err)
 //   })
 
-http({
+// http({
+//   transformRequest: [
+//     function(data) {
+//       return qs.stringify(data)
+//     },
+//     ...(http.defaults.transformRequest as HttpTransformer[])
+//   ],
+//   transformResponse: [
+//     ...(http.defaults.transformResponse as HttpTransformer[]),
+//     function(data) {
+//       if (typeof data === 'object') {
+//         data.b = 2
+//       }
+//       return data
+//     }
+//   ],
+//   url: '/config/post',
+//   method: 'post',
+//   data: {
+//     a: 1
+//   }
+// })
+//   .then(res => {
+//     console.log(res.data)
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
+
+const instance = http.create({
   transformRequest: [
     function(data) {
       return qs.stringify(data)
@@ -34,7 +63,10 @@ http({
       }
       return data
     }
-  ],
+  ]
+})
+
+instance({
   url: '/config/post',
   method: 'post',
   data: {
