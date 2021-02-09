@@ -1,3 +1,4 @@
+import { deepMerge, isPlainObject } from '../helpers/util'
 import { HttpRequestConfig } from './../type/dataInterface'
 
 /**
@@ -13,12 +14,38 @@ function defaultStrategy(val1: any, val2: any): any {
 const strategies = Object.create(null)
 
 // 针对一些特殊的 配置使用特殊的 合并方法
-const specialConfigsKeys = ['url', 'params', 'data']
 function specialConfigStrategy(val1: any, val2: any): any {
   if (typeof val2 !== 'undefined') return val2
 }
+const specialConfigsKeys = ['url', 'params', 'data']
 specialConfigsKeys.map(key => {
   strategies[key] = specialConfigStrategy
+})
+
+/**
+ * 深度合并方案
+ * @val1 已有参数
+ * @val2 需要合并的参数
+ */
+function deepMergeStrategy(val1: any, val2: any): any {
+  if (isPlainObject(val2)) {
+    // val2 为对象则采用深度合并工具
+    return deepMerge([val1, val2])
+  } else if (typeof val2 !== 'undefined') {
+    // val2 非对象且不为空
+    return val2
+  } else if (isPlainObject(val1)) {
+    // 只有val1 且 val1 为对象
+    return deepMerge([val1])
+  } else if(typeof val1 !== 'undefined') {
+    // 只有val1 且 val1 非对象 且 不为空
+    return val1
+  }
+}
+// 需要深度合并的配置 采用深度合并策略
+const deepConfigKeys = ['headers']
+deepConfigKeys.map(key => {
+  strategies[key] = deepMergeStrategy
 })
 
 /**
