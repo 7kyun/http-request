@@ -124,7 +124,7 @@ router.get('/interceptor/get', (req, res) => {
  * Config
  */
 router.post('/config/post', (req, res) => {
-  res.json(res.body)
+  res.json(req.body)
 })
 
 // 路由监听

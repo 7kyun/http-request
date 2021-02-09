@@ -20,6 +20,10 @@ export interface HttpRequestConfig {
 
   // 添加一个字符串索引的属性 值为 any类型 
   [propName: string]: any
+
+  // 
+  transformRequest?: HttpTransformer | HttpTransformer[]
+  transformResponse?: HttpTransformer | HttpTransformer[]
 }
 
 // 返回data的定义： 泛型 默认为 any
