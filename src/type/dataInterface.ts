@@ -48,6 +48,7 @@ export interface HttpError {
 
 // 定义方法时 保证实际传入的泛型 与 返回的promise的泛型一致
 export interface Http {
+  defaults: HttpRequestConfig
   interceptors: {
     request: InterceptorManager<HttpRequestConfig>
     response: InterceptorManager<HttpResponse>

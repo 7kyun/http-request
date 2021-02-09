@@ -30,13 +30,13 @@ specialConfigsKeys.map(key => {
 function deepMergeStrategy(val1: any, val2: any): any {
   if (isPlainObject(val2)) {
     // val2 为对象则采用深度合并工具
-    return deepMerge([val1, val2])
+    return deepMerge(val1, val2)
   } else if (typeof val2 !== 'undefined') {
     // val2 非对象且不为空
     return val2
   } else if (isPlainObject(val1)) {
     // 只有val1 且 val1 为对象
-    return deepMerge([val1])
+    return deepMerge(val1)
   } else if(typeof val1 !== 'undefined') {
     // 只有val1 且 val1 非对象 且 不为空
     return val1

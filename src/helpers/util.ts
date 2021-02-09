@@ -33,9 +33,9 @@ export function deepMerge(...objects: any[]): any {
         if (isPlainObject(val)) {
           // 若已存储该属性 且 值也为对象
           if (isPlainObject(result[key])) {
-            result[key] = deepMerge([result[key], val]) // 将 result 和 val 递归合并
+            result[key] = deepMerge(result[key], val) // 将 result 和 val 递归合并
           } else {
-            result[key] = deepMerge([{}, val]) // 将 val 递归写入 空对象
+            result[key] = deepMerge({}, val) // 将 val 递归写入 空对象
           }
         } else {
           // 非 对象 直接写入值

@@ -1,5 +1,5 @@
 import { parseData, stringifyData } from '../helpers/data'
-import { processHeaders } from '../helpers/headers';
+import { headersFlattening, processHeaders } from '../helpers/headers';
 import { buildUrl } from '../helpers/url'
 import { HttpPromise, HttpRequestConfig, HttpResponse } from '../type/dataInterface'
 import { xhr } from './xhr'
@@ -29,6 +29,8 @@ function processConfig(config: HttpRequestConfig) {
   config.url = formatUrl(config)
   config.headers = formatHeader(config)
   config.data = formatRequestData(config)
+
+  config.headers = headersFlattening(config.headers, config.method!)
 }
 
 export default function dispatchRequest(config: HttpRequestConfig): HttpPromise {

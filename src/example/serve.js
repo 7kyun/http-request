@@ -116,9 +116,15 @@ router.get('/extend/user', (req, res) => {
 })
 /**
  * Interceptor
-*/
+ */
 router.get('/interceptor/get', (req, res) => {
   res.send('hello')
+})
+/**
+ * Config
+ */
+router.post('/config/post', (req, res) => {
+  res.json(res.body)
 })
 
 // 路由监听

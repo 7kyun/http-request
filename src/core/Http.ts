@@ -2,6 +2,7 @@ import { ResolvedFn, RejectedFn } from './../type/dataInterface'
 import { HttpPromise, HttpRequestConfig, HttpResponse, Method } from "../type/dataInterface"
 import dispatchRequest from "./dispatchRequest"
 import InterceptorManager from "./InterceptorManager"
+import mergeConfig from './mergeConfig'
 
 interface Interceptors {
   request: InterceptorManager<HttpRequestConfig>
@@ -54,6 +55,9 @@ export default class Http {
       // url 为 config
       config = url
     }
+
+    // 在拦截器之前 先将输入配置与默认配置合并
+    config = mergeConfig(this.defaults, config)
 
     // 把默认的处理 xhr 请求的函数放在此处,作为初始值,不管有没有拦截器,这个一定是会执行的
     const chain: PromiseChain<any>[] = [{

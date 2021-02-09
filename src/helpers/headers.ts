@@ -1,4 +1,5 @@
-import { isPlainObject } from "./util"
+import { Method } from '../type/dataInterface'
+import { deepMerge, isPlainObject } from "./util"
 
 // 设置 headers 的 标准名
 function setHeaderName(headers: any, normalizeName: string) {
@@ -38,4 +39,21 @@ export function parseHeaders(headers: string): any {
   })
 
   return parsed
+}
+
+// 扁平化处理
+export function headersFlattening(headers: any, method: Method): any {
+  // 若不存在headers 则不作处理直接返回 undefined
+  if (!headers) return
+
+  // 将 通用配置、该method的配置、自定义的配置 合并
+  headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
+
+  // 移除配置项
+  const delKeys = ['get', 'delete', 'head', 'options', 'patch', 'put', 'post', 'common']
+  delKeys.map(key => {
+    delete headers[key]
+  })
+
+  return headers
 }
