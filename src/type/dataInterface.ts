@@ -24,6 +24,28 @@ export interface HttpRequestConfig {
   // 
   transformRequest?: HttpTransformer | HttpTransformer[]
   transformResponse?: HttpTransformer | HttpTransformer[]
+
+  // 请求取消
+  cancelToken?: CancelToken
+}
+
+export interface HttpTransformer {
+  (data: any, headers?: any): any
+}
+
+export interface CancelToken {
+  promise: Promise<string>
+  reason?: string 
+}
+
+// 取消方法
+export interface Canceler {
+  (msg?: string): void
+}
+
+// CancelToken 类构造函数 参数的接口定义
+export interface CancelExecutor {
+  (cancel: Canceler): void
 }
 
 // 返回data的定义： 泛型 默认为 any

@@ -6,13 +6,23 @@ export function xhr(config: HttpRequestConfig): HttpPromise {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
 
-    let { url, method = 'GET', headers, data = null, responseType, timeout } = config
+    let { url, method = 'GET', headers, data = null, responseType, timeout, cancelToken } = config
 
     if (responseType) {
       request.responseType = responseType
     }
     if (timeout) {
       request.timeout = timeout
+    }
+    if (cancelToken) {
+      cancelToken.promise
+        .then(reason => {
+          request.abort()
+          reject(reason)
+        })
+        .catch(() => {
+          //
+        })
     }
 
     // method 统一处理为大写
