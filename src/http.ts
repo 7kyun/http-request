@@ -1,3 +1,5 @@
+import Cancel, { isCancel } from './cancel/Cancel'
+import CancelToken from './cancel/CancelToken'
 import Http from './core/Http'
 import mergeConfig from './core/mergeConfig'
 import { defaults } from './default'
@@ -21,5 +23,9 @@ const http = createInstance(defaults)
 http.create = function create(config: HttpRequestConfig) {
   return createInstance(mergeConfig(defaults, config))
 }
+
+http.CancelToken = CancelToken
+http.Cancel = Cancel
+http.isCancel = isCancel
 
 export default http

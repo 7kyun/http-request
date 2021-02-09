@@ -1,4 +1,4 @@
-import InterceptorManager from "../core/InterceptorManager";
+import InterceptorManager from "../core/InterceptorManager"
 
 // 定义 method 请求方法
 export type Method = 'get'     | 'GET'     |
@@ -34,8 +34,9 @@ export interface HttpTransformer {
 }
 
 export interface CancelToken {
-  promise: Promise<string>
-  reason?: string 
+  promise: Promise<Cancel>
+  reason?: Cancel
+  throwIfRequested(): void
 }
 
 // 取消方法
@@ -46,6 +47,25 @@ export interface Canceler {
 // CancelToken 类构造函数 参数的接口定义
 export interface CancelExecutor {
   (cancel: Canceler): void
+}
+
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Canceler
+}
+
+export interface CancelTokenStatic {
+  new(executor: CancelExecutor): CancelToken
+
+  source(): CancelTokenSource
+}
+
+export interface Cancel {
+  msg?: string
+}
+
+export interface CancelStatic {
+  new(msg?: string): Cancel
 }
 
 // 返回data的定义： 泛型 默认为 any
@@ -114,4 +134,8 @@ export interface RejectedFn {
 
 export interface HttpStatic extends HttpInstance {
   create(config?: HttpRequestConfig): HttpInstance
+
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (val: any) => boolean
 }

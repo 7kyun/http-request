@@ -39,7 +39,14 @@ function processConfig(config: HttpRequestConfig) {
   config.headers = headersFlattening(config.headers, config.method!)
 }
 
+function throwIfCancellationRequest(config: HttpRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
+}
+
 export default function dispatchRequest(config: HttpRequestConfig): HttpPromise {
+  throwIfCancellationRequest(config)
   processConfig(config)
   // 发起数据请求
   return xhr(config).then(res => {
